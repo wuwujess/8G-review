@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇幻英語孵蛋大冒險 | 九年級英語學習扶助闖關</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Noto Sans TC 與 Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        display: ['"Fredoka"', '"Noto Sans TC"', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'wobble': 'wobble 0.8s ease-in-out',
+                        'pulse-glow': 'pulseGlow 2.5s infinite',
+                        'pop-in': 'popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+                        'shake': 'shake 0.4s ease-in-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wobble: {
+                            '0%, 100%': { transform: 'rotate(0deg)' },
+                            '20%': { transform: 'rotate(-8deg) scale(1.05)' },
+                            '40%': { transform: 'rotate(8deg) scale(1.05)' },
+                            '60%': { transform: 'rotate(-5deg)' },
+                            '80%': { transform: 'rotate(5deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 12px rgba(251, 191, 36, 0.6))' },
+                            '50%': { filter: 'drop-shadow(0 0 24px rgba(251, 191, 36, 0.95))' },
+                        },
+                        popIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.8)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '25%': { transform: 'translateX(-6px)' },
+                            '75%': { transform: 'translateX(6px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at 20% 20%, #2e1065 0%, #1e1b4b 45%, #0f172a 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* 星空點綴背景 */
+        .stars-bg {
+            background-image: 
+                radial-gradient(2px 2px at 40px 60px, #fef08a, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 120px 180px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(3px 3px at 260px 90px, #c4b5fd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 380px 240px, #fde047, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 520px 130px, #ffffff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 600px 300px;
+        }
+
+        /* 玻璃擬態卡片 */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 孵蛋培養皿發光底座 */
+        .incubator-pedestal {
+            background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.35) 0%, rgba(139, 92, 246, 0.15) 55%, transparent 75%);
+        }
+
+        /* 單字排序卡片立體按鈕感 */
+        .word-chip {
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 0 #475569;
+        }
+        .word-chip:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #475569;
+        }
+        .word-chip-selected {
+            box-shadow: 0 4px 0 #047857;
+        }
+        .word-chip-selected:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #047857;
+        }
+
+        /* 圖鑑剪影效果 */
+        .silhouette svg {
+            filter: brightness(0) invert(0.15) drop-shadow(0 0 6px rgba(167, 139, 250, 0.4));
+        }
+
+        /* 自定義捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="stars-bg font-sans antialiased selection:bg-amber-400 selection:text-slate-900">
+
+    <!-- 頂部導覽列 -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-indigo-500/30 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg text-slate-950 font-black text-xl">
+                    🥚
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-lg sm:text-xl text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-emerald-300 leading-tight">
+                        奇幻英語孵蛋大冒險
+                    </h1>
+                    <p class="text-xs text-indigo-200">九年級學習扶助｜八年級核心文法與單字特訓</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- 圖鑑預覽按鈕 -->
+                <button onclick="openPokedexModal()" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-indigo-600/80 hover:bg-indigo-500 text-white text-sm font-bold border border-indigo-400/40 transition shadow-md">
+                    <span>📖</span>
+                    <span>神獸圖鑑</span>
+                </button>
+                <!-- 音效開關 -->
+                <button id="soundToggleBtn" onclick="toggleSound()" class="p-2 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-amber-300 border border-slate-600 transition" title="切換音效">
+                    <span id="soundIcon" class="text-lg">🔊</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主內容容器 -->
+    <main class="max-w-6xl mx-auto px-4 py-6 sm:py-8">
+
+        <!-- ================= 1. 歡迎與登入畫面 ================= -->
+        <section id="welcomeScreen" class="max-w-3xl mx-auto animate-pop-in">
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+                <!-- 裝飾光暈 -->
+                <div class="absolute -top-24 -left-24 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="inline-block px-4 py-1.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-sm font-bold mb-4">
+                    ✨ 36道精選關卡 × 5種奇幻神獸等你孵化 ✨
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-black text-white mb-4 tracking-wide">
+                    準備好孵化你的<span class="text-amber-400">專屬守護神獸</span>了嗎？
+                </h2>
+                <p class="text-slate-300 text-base sm:text-lg max-w-xl mx-auto mb-6 leading-relaxed">
+                    透過三個階段的八年級核心英語挑戰，累積孵化能量與連擊數！你的答題表現將決定神獸的最終進化型態！
+                </p>
+
+                <!-- 預覽初始神秘蛋 -->
+                <div class="w-44 h-44 mx-auto mb-6 incubator-pedestal rounded-full flex items-center justify-center animate-float" id="welcomeEggPreview">
+                    <!-- JS 動態注入神秘蛋 SVG -->
+                </div>
+
+                <!-- 關卡階段簡介 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left mb-8">
+                    <div class="bg-slate-800/80 border border-emerald-500/30 rounded-2xl p-4">
+                        <div class="text-emerald-400 font-bold text-sm mb-1">STAGE 1 (第 1-12 題)</div>
+                        <div class="font-bold text-white text-base mb-1">🌱 基礎孵化期</div>
+                        <p class="text-xs text-slate-300">八年級高頻單字、過去式、未來式與情緒分詞 (-ed/-ing)</p>
+                    </div>
+                    <div class="bg-slate-800/80 border border-amber-500/30 rounded-2xl p-4">
+                        <div class="text-amber-400 font-bold text-sm mb-1">STAGE 2 (第 13-24 題)</div>
+                        <div class="font-bold text-white text-base mb-1">⚡ 裂殼成長期</div>
+                        <p class="text-xs text-slate-300">比較級與最高級、動名詞/不定詞、連接詞與時態一致</p>
+                    </div>
+                    <div class="bg-slate-800/80 border border-rose-500/30 rounded-2xl p-4">
+                        <div class="text-rose-400 font-bold text-sm mb-1">STAGE 3 (第 25-36 題)</div>
+                        <div class="font-bold text-white text-base mb-1">🔥 神獸覺醒期</div>
+                        <p class="text-xs text-slate-300">使役與感官動詞、頻率副詞、反身與不定代名詞挑戰</p>
+                    </div>
+                </div>
+
+                <!-- 學生資料輸入 -->
+                <div class="max-w-md mx-auto space-y-4">
+                    <div>
+                        <label for="studentNameInput" class="block text-left text-sm font-bold text-amber-300 mb-1.5">
+                            請輸入你的座號與姓名（將印在結業證書上）：
+                        </label>
+                        <input type="text" id="studentNameInput" placeholder="例如：901 15號 王小明" maxlength="20"
+                            class="w-full px-4 py-3.5 rounded-2xl bg-slate-900/90 border-2 border-indigo-400/50 focus:border-amber-400 focus:outline-none text-white text-lg font-bold placeholder-slate-500 transition">
+                        <p id="nameErrorMsg" class="hidden text-rose-400 text-xs text-left mt-1.5 font-bold">⚠️ 請先輸入你的名字或座號再開始冒險喔！</p>
+                    </div>
+
+                    <button onclick="startGame()" class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-orange-500 to-amber-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-xl shadow-lg shadow-amber-500/30 transform hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+                        <span>🚀 領取神秘蛋，開始冒險！</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 2. 遊戲主闖關畫面 ================= -->
+        <section id="gameScreen" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- 左側/上方：專屬孵蛋培養皿狀態欄 (4 cols) -->
+            <aside class="lg:col-span-4 glass-panel rounded-3xl p-5 sm:p-6 border border-indigo-400/30 lg:sticky lg:top-24">
+                <div class="flex items-center justify-between mb-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-300">馴獸師</span>
+                        <h3 id="displayStudentName" class="font-bold text-white text-base truncate max-w-[160px]">冒險者</h3>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs font-bold text-amber-300 block">當前孵化積分</span>
+                        <span id="scoreDisplay" class="font-display font-black text-2xl text-amber-400">0</span>
+                    </div>
+                </div>
+
+                <!-- 培養皿視覺區 -->
+                <div class="relative rounded-2xl bg-slate-900/80 border border-indigo-500/30 p-4 mb-4 text-center overflow-hidden">
+                    <div class="flex justify-between items-center text-xs mb-1">
+                        <span id="petStageBadge" class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+                            階段 1：沉睡的神秘蛋
+                        </span>
+                        <span id="comboBadge" class="px-2.5 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/40 font-bold hidden">
+                            🔥 0 連擊
+                        </span>
+                    </div>
+
+                    <!-- 動態神獸/蛋 SVG 容器 -->
+                    <div id="incubatorContainer" class="w-44 h-44 mx-auto my-2 incubator-pedestal rounded-full flex items-center justify-center animate-float cursor-pointer" onclick="pokeEgg()" title="點點看你的蛋！">
+                        <!-- JS 動態更新 SVG -->
+                    </div>
+
+                    <p id="petStatusText" class="text-sm font-bold text-amber-200 mt-1">
+                        「蛋殼裡傳來微弱的心跳聲...」
+                    </p>
+                </div>
+
+                <!-- 孵化能量條 (XP Progress) -->
+                <div class="space-y-2 mb-4">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-indigo-200">✨ 孵化能量累積</span>
+                        <span id="energyPercentText" class="text-emerald-400">0%</span>
+                    </div>
+                    <div class="w-full h-4 bg-slate-900 rounded-full p-0.5 border border-slate-700 overflow-hidden">
+                        <div id="energyBar" class="h-full rounded-full bg-gradient-to-r from-emerald-400 via-teal-400 to-amber-400 transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <p class="text-[11px] text-slate-400 text-center">
+                        能量越高、連擊越多，最終孵化的神獸越稀有！
+                    </p>
+                </div>
+
+                <!-- 三階段里程碑進度 -->
+                <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-700/70 text-center text-xs">
+                    <div id="stagePill1" class="p-2 rounded-xl bg-indigo-600/40 border border-indigo-400 text-white font-bold">
+                        <div>Stage 1</div>
+                        <div class="text-[10px] text-indigo-200">基礎孵化</div>
+                    </div>
+                    <div id="stagePill2" class="p-2 rounded-xl bg-slate-800/60 border border-slate-700 text-slate-400 font-bold">
+                        <div>Stage 2</div>
+                        <div class="text-[10px]">裂殼成長</div>
+                    </div>
+                    <div id="stagePill3" class="p-2 rounded-xl bg-slate-800/60 border border-slate-700 text-slate-400 font-bold">
+                        <div>Stage 3</div>
+                        <div class="text-[10px]">神獸覺醒</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 右側/下方：題目互動區 (8 cols) -->
+            <div class="lg:col-span-8 glass-panel rounded-3xl p-5 sm:p-8 border border-indigo-400/30">
+                <!-- 題號與單元標籤 -->
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-slate-700/80">
+                    <div class="flex items-center gap-2">
+                        <span id="questionNumberBadge" class="px-3.5 py-1 rounded-xl bg-amber-400 text-slate-950 font-display font-black text-sm">
+                            Q 1 / 36
+                        </span>
+                        <span id="questionCategoryBadge" class="px-3 py-1 rounded-xl bg-indigo-500/30 border border-indigo-400/40 text-indigo-200 text-xs sm:text-sm font-bold">
+                            八年級高頻單字
+                        </span>
+                    </div>
+                    <span id="questionTypeBadge" class="px-3 py-1 rounded-full bg-slate-800 text-emerald-300 border border-emerald-500/30 text-xs font-bold">
+                        🎯 情境四選一
+                    </span>
+                </div>
+
+                <!-- 題目情境與主幹 -->
+                <div id="questionContentArea" class="mb-6">
+                    <!-- 情境提示框 -->
+                    <div id="questionContextBox" class="hidden mb-3 px-4 py-2.5 rounded-xl bg-indigo-950/70 border-l-4 border-amber-400 text-amber-200 text-sm">
+                    </div>
+                    <!-- 英文題幹 -->
+                    <h2 id="questionPrompt" class="text-xl sm:text-2xl font-bold text-white leading-relaxed mb-2">
+                        題目載入中...
+                    </h2>
+                    <!-- 中文輔助翻譯 (降低學習扶助學生閱讀焦慮) -->
+                    <p id="questionTranslation" class="text-sm sm:text-base text-slate-300">
+                    </p>
+                </div>
+
+                <!-- 互動答題區域 (依據題型動態渲染) -->
+                <div id="interactiveAnswerArea" class="mb-6">
+                    <!-- 題型1: 四選一 / 題型2: 單字重組 / 題型3: 克漏字填空 -->
+                </div>
+
+                <!-- 提交按鈕 (用於重組題或克漏字確認) -->
+                <div id="submitActionRow" class="hidden mb-6">
+                    <button id="checkAnswerBtn" onclick="submitComplexAnswer()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-lg shadow-lg shadow-emerald-500/25 transition">
+                        ✨ 確認送出答案
+                    </button>
+                </div>
+
+                <!-- 即時回饋與九年級學習扶助專屬文法小錦囊 -->
+                <div id="feedbackBox" class="hidden rounded-2xl p-5 mb-6 animate-pop-in">
+                    <div class="flex items-start gap-3">
+                        <div id="feedbackIcon" class="text-3xl shrink-0">🎉</div>
+                        <div class="flex-1">
+                            <h4 id="feedbackTitle" class="font-black text-lg mb-1">太棒了！答對囉！</h4>
+                            <p id="feedbackCorrectAnswer" class="text-sm font-bold mb-2 hidden"></p>
+                            <div class="bg-slate-900/70 rounded-xl p-3.5 border border-white/10">
+                                <div class="text-xs font-bold text-amber-300 mb-1">💡 九年級學習扶助｜文法小錦囊</div>
+                                <p id="feedbackExplanation" class="text-sm text-slate-200 leading-relaxed"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 下一題按鈕 -->
+                <div id="nextBtnRow" class="hidden flex justify-end">
+                    <button id="nextQuestionBtn" onclick="nextQuestion()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-lg shadow-lg transition flex items-center justify-center gap-2">
+                        <span id="nextBtnText">繼續下一題</span>
+                        <span>➔</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. 階段進化休息站 Modal (第12、24題結束時觸發) ================= -->
+        <section id="stageBreakScreen" class="hidden max-w-2xl mx-auto animate-pop-in">
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 text-center border-2 border-amber-400/50 relative overflow-hidden">
+                <div class="inline-block px-4 py-1 rounded-full bg-amber-400/20 text-amber-300 font-bold text-sm mb-3">
+                    🌟 階段關卡完成！孵化進度突破！ 🌟
+                </div>
+                <h2 id="stageBreakTitle" class="text-2xl sm:text-3xl font-black text-white mb-2">
+                    第一階段完成！蛋殼開始裂開了！
+                </h2>
+                <p id="stageBreakSubtitle" class="text-slate-300 text-sm sm:text-base mb-6">
+                    快看看你目前培養出的階段型態！繼續加油就能讓它完全覺醒！
+                </p>
+
+                <!-- 階段進化形態展示 -->
+                <div class="w-56 h-56 mx-auto mb-4 incubator-pedestal rounded-full flex items-center justify-center animate-wobble" id="stageBreakPetSvg">
+                    <!-- 動態注入當下進化型態 SVG -->
+                </div>
+
+                <div class="bg-slate-900/80 rounded-2xl p-4 max-w-md mx-auto mb-6 border border-indigo-400/30">
+                    <div id="stageBreakPetName" class="text-xl font-black text-amber-400 mb-1">裂殼萌芽獸</div>
+                    <p id="stageBreakPetDesc" class="text-sm text-slate-300">
+                        它感受到了你的努力，正準備迎接下一階段的挑戰！
+                    </p>
+                    <div class="mt-3 pt-3 border-t border-slate-700 flex justify-around text-sm">
+                        <div>
+                            <span class="text-slate-400 block text-xs">目前總分</span>
+                            <span id="stageBreakScore" class="font-display font-bold text-emerald-400 text-lg">0</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block text-xs">本階段答對率</span>
+                            <span id="stageBreakAcc" class="font-display font-bold text-amber-400 text-lg">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="continueNextStage()" class="w-full sm:w-auto px-10 py-4 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black text-lg shadow-lg transition">
+                    🔥 進入下一階段挑戰！
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= 4. 最終孵化與結業證書畫面 ================= -->
+        <section id="resultScreen" class="hidden max-w-4xl mx-auto animate-pop-in">
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 border-2 border-amber-400/60 relative overflow-hidden">
+                <!-- 證書頂部緞帶 -->
+                <div class="text-center mb-6">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-black text-sm mb-3 shadow">
+                        🏆 奇幻英語馴獸師結業證書 🏆
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-white">
+                        恭喜 <span id="certStudentName" class="text-amber-400 underline decoration-amber-400/50">同學</span> 完成 36 題大冒險！
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center mb-8">
+                    <!-- 左側：最終孵化神獸大圖 -->
+                    <div class="md:col-span-5 bg-slate-900/90 rounded-3xl p-6 border border-amber-400/40 text-center relative">
+                        <div id="finalRarityBadge" class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/50 text-xs font-black mb-2">
+                            【傳說級神獸】
+                        </div>
+                        <div id="finalPetSvgContainer" class="w-52 h-52 mx-auto my-2 incubator-pedestal rounded-full flex items-center justify-center animate-float animate-pulse-glow">
+                            <!-- 最終神獸 SVG -->
+                        </div>
+                        <h3 id="finalPetName" class="text-2xl font-black text-amber-300 mt-2">星辰黃金聖龍</h3>
+                        <p id="finalPetQuote" class="text-xs text-slate-300 mt-2 leading-relaxed">
+                            「你的英語實力如星辰般閃耀，我將永遠守護你的學習之路！」
+                        </p>
+                    </div>
+
+                    <!-- 右側：成績總覽與文法弱點診斷 -->
+                    <div class="md:col-span-7 space-y-4">
+                        <!-- 核心數據卡 -->
+                        <div class="grid grid-cols-3 gap-3 text-center">
+                            <div class="bg-slate-800/90 rounded-2xl p-3.5 border border-slate-700">
+                                <span class="text-xs text-slate-400 block">最終積分</span>
+                                <span id="finalTotalScore" class="font-display font-black text-2xl sm:text-3xl text-amber-400">0</span>
+                            </div>
+                            <div class="bg-slate-800/90 rounded-2xl p-3.5 border border-slate-700">
+                                <span class="text-xs text-slate-400 block">總答對題數</span>
+                                <span id="finalCorrectCount" class="font-display font-black text-2xl sm:text-3xl text-emerald-400">0/36</span>
+                            </div>
+                            <div class="bg-slate-800/90 rounded-2xl p-3.5 border border-slate-700">
+                                <span class="text-xs text-slate-400 block">最高連擊</span>
+                                <span id="finalMaxCombo" class="font-display font-black text-2xl sm:text-3xl text-orange-400">0</span>
+                            </div>
+                        </div>
+
+                        <!-- 八年級文法單元掌握度診斷 -->
+                        <div class="bg-slate-900/80 rounded-2xl p-5 border border-indigo-400/30">
+                            <h4 class="font-bold text-indigo-200 text-sm mb-3 flex items-center gap-1.5">
+                                <span>📊</span>
+                                <span>八年級核心文法掌握度診斷報告</span>
+                            </h4>
+                            <div id="grammarBreakdownList" class="space-y-3">
+                                <!-- JS 動態產生各文法類別長條圖 -->
+                            </div>
+                        </div>
+
+                        <!-- 老師專屬學習建議 -->
+                        <div id="teacherAdviceBox" class="bg-emerald-950/50 border border-emerald-500/40 rounded-2xl p-4 text-sm text-emerald-200 leading-relaxed">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部按鈕列 -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-slate-700/80">
+                    <button onclick="openPokedexModal()" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition flex items-center justify-center gap-2">
+                        <span>📖 查看神獸圖鑑收集進度</span>
+                    </button>
+                    <button onclick="restartGame()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black transition flex items-center justify-center gap-2 shadow-lg">
+                        <span>🔄 再挑戰一次，孵化不同神獸！</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= 神獸圖鑑預覽彈窗 (Modal) ================= -->
+    <div id="pokedexModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-panel rounded-3xl max-w-4xl w-full max-h-[88vh] flex flex-col border border-indigo-400/40 overflow-hidden animate-pop-in">
+            <div class="p-5 border-b border-slate-700 flex items-center justify-between bg-slate-900/60">
+                <div>
+                    <h3 class="text-xl font-black text-amber-300 flex items-center gap-2">
+                        <span>📖 奇幻神獸圖鑑 (共 5 種最終型態)</span>
+                    </h3>
+                    <p class="text-xs text-slate-300 mt-0.5">累積越高的孵化能量與答對率，就能解鎖越稀有的傳說神獸！</p>
+                </div>
+                <button onclick="closePokedexModal()" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold flex items-center justify-center">
+                    ✕
+                </button>
+            </div>
+            <div id="pokedexGrid" class="p-5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- JS 動態生成 5 種神獸圖鑑卡片 (未解鎖顯示神秘剪影) -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 核心邏輯與完整 36 題題庫 -->
+    <script>
+        /* =====================================================================
+           1. Web Audio API 遊戲音效合成器 (無需外部音檔)
+           ===================================================================== */
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundIcon').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+
+        function playTone(freq, type, duration, delay = 0, vol = 0.15) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay);
+                
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime + delay);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + duration);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(audioCtx.currentTime + delay);
+                osc.stop(audioCtx.currentTime + delay + duration);
+            } catch (e) {
+                // 忽略瀏覽器音訊限制錯誤
+            }
+        }
+
+        const SFX = {
+            click: () => playTone(520, 'sine', 0.08, 0, 0.1),
+            correct: () => {
+                playTone(523.25, 'triangle', 0.12, 0, 0.18);   // C5
+                playTone(659.25, 'triangle', 0.12, 0.08, 0.18); // E5
+                playTone(783.99, 'triangle', 0.25, 0.16, 0.2);  // G5
+            },
+            combo: () => {
+                playTone(587.33, 'sine', 0.1, 0, 0.18);
+                playTone(783.99, 'sine', 0.1, 0.07, 0.18);
+                playTone(987.77, 'sine', 0.1, 0.14, 0.18);
+                playTone(1174.66, 'triangle', 0.3, 0.21, 0.22);
+            },
+            wrong: () => {
+                playTone(300, 'sawtooth', 0.18, 0, 0.12);
+                playTone(240, 'sawtooth', 0.28, 0.14, 0.12);
+            },
+            evolve: () => {
+                const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+                notes.forEach((n, idx) => playTone(n, 'triangle', 0.25, idx * 0.1, 0.2));
+            }
+        };
+
+        /* =====================================================================
+           2. 精細 SVG 神獸與孵蛋階段圖形庫
+           ===================================================================== */
+        const PET_SVGS = {
+            // 階段 1：神秘蛋
+            egg: `
+                <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-xl">
+                    <defs>
+                        <radialGradient id="eggGrad" cx="35%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fef9c3"/>
+                            <stop offset="45%" stop-color="#fde047"/>
+                            <stop offset="85%" stop-color="#d97706"/>
+                            <stop offset="100%" stop-color="#92400e"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- 底座光環 -->
+                    <ellipse cx="100" cy="172" rx="52" ry="12" fill="rgba(251,191,36,0.3)"/>
+                    <!-- 蛋身 -->
+                    <path d="M100,25 C142,25 162,78 162,122 C162,158 135,174 100,174 C65,174 38,158 38,122 C38,78 58,25 100,25 Z" fill="url(#eggGrad)" stroke="#fef08a" stroke-width="3"/>
+                    <!-- 奇幻魔法紋路 -->
+                    <path d="M55,95 Q80,75 100,95 T145,95" fill="none" stroke="#b45309" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+                    <path d="M46,130 Q75,112 100,130 T154,130" fill="none" stroke="#b45309" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+                    <circle cx="82" cy="65" r="7" fill="#fffbeb" opacity="0.7"/>
+                    <circle cx="122" cy="72" r="5" fill="#fffbeb" opacity="0.6"/>
+                    <circle cx="100" cy="112" r="9" fill="#f59e0b" stroke="#fef08a" stroke-width="2"/>
+                </svg>
+            `,
+            // 階段 2：裂殼期 (依表現顯示不同光澤的裂殼蛋)
+            crackedEgg: `
+                <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-xl">
+                    <defs>
+                        <radialGradient id="crackEggGrad" cx="35%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#e0f2fe"/>
+                            <stop offset="50%" stop-color="#38bdf8"/>
+                            <stop offset="100%" stop-color="#1d4ed8"/>
+                        </radialGradient>
+                    </defs>
+                    <ellipse cx="100" cy="174" rx="55" ry="12" fill="rgba(56,189,248,0.35)"/>
+                    <!-- 下半蛋殼 -->
+                    <path d="M40,108 L65,120 L88,104 L112,122 L135,105 L160,115 C160,155 135,174 100,174 C65,174 40,155 40,108 Z" fill="url(#crackEggGrad)" stroke="#bae6fd" stroke-width="3"/>
+                    <!-- 內部發光大眼睛偷看 -->
+                    <ellipse cx="100" cy="96" rx="36" ry="26" fill="#0f172a"/>
+                    <circle cx="86" cy="95" r="8" fill="#fde047"/>
+                    <circle cx="114" cy="95" r="8" fill="#fde047"/>
+                    <circle cx="88" cy="93" r="3" fill="#ffffff"/>
+                    <circle cx="116" cy="93" r="3" fill="#ffffff"/>
+                    <!-- 上半微掀蛋殼 -->
+                    <path d="M100,20 C138,20 156,64 159,98 L135,88 L112,105 L88,87 L65,103 L42,92 C46,60 64,20 100,20 Z" fill="url(#crackEggGrad)" stroke="#bae6fd" stroke-width="3" transform="rotate(-6 100 60)"/>
+                    <!-- 能量火花 -->
+                    <polygon points="100,8 103,16 111,16 105,21 107,29 100,24 93,29 95,21 89,16 97,16" fill="#fef08a"/>
+                </svg>
+            `,
+            // 階段 3：幼年期 (破殼而出但尚未完全覺醒的小幼獸)
+            babyHatchling: `
+                <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-xl">
+                    <defs>
+                        <linearGradient id="babyBody" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#a7f3d0"/>
+                            <stop offset="100%" stop-color="#10b981"/>
+                        </linearGradient>
+                    </defs>
+                    <ellipse cx="100" cy="176" rx="56" ry="12" fill="rgba(16,185,129,0.35)"/>
+                    <!-- 小翅膀 -->
+                    <path d="M55,105 Q22,82 32,118 Q45,125 58,120 Z" fill="#fef08a" stroke="#f59e0b" stroke-width="2"/>
+                    <path d="M145,105 Q178,82 168,118 Q155,125 142,120 Z" fill="#fef08a" stroke="#f59e0b" stroke-width="2"/>
+                    <!-- 圓滾滾身體與頭 -->
+                    <circle cx="100" cy="105" r="46" fill="url(#babyBody)" stroke="#ecfdf5" stroke-width="3"/>
+                    <!-- 頭頂小角 -->
+                    <polygon points="100,42 91,62 109,62" fill="#fbbf24" stroke="#fef08a" stroke-width="2"/>
+                    <!-- 可愛大眼 -->
+                    <circle cx="83" cy="100" r="9" fill="#064e3b"/>
+                    <circle cx="117" cy="100" r="9" fill="#064e3b"/>
+                    <circle cx="86" cy="97" r="3.5" fill="#ffffff"/>
+                    <circle cx="120" cy="97" r="3.5" fill="#ffffff"/>
+                    <!-- 腮紅與微笑 -->
+                    <ellipse cx="70" cy="112" rx="6" ry="3.5" fill="#fb7185" opacity="0.7"/>
+                    <ellipse cx="130" cy="112" rx="6" ry="3.5" fill="#fb7185" opacity="0.7"/>
+                    <path d="M92,115 Q100,124 108,115" fill="none" stroke="#064e3b" stroke-width="3.5" stroke-linecap="round"/>
+                    <!-- 底部殘留蛋殼褲子 -->
+                    <path d="M52,128 L72,140 L90,126 L108,140 L128,126 L148,136 C145,164 125,174 100,174 C75,174 55,164 52,128 Z" fill="#fef9c3" stroke="#f59e0b" stroke-width="2.5"/>
+                </svg>
+            `,
+
+            /* ================= 5 種最終神獸型態 ================= */
+            // 1. 【傳說級】星辰黃金聖龍 (Starlight Golden Dragon)
+            dragon: `
+                <svg viewBox="0 0 220 220" class="w-full h-full">
+                    <defs>
+                        <linearGradient id="goldDragon" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#fef08a"/>
+                            <stop offset="50%" stop-color="#f59e0b"/>
+                            <stop offset="100%" stop-color="#b45309"/>
+                        </linearGradient>
+                        <linearGradient id="wingGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#818cf8"/>
+                            <stop offset="100%" stop-color="#312e81"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- 背後星辰光輪 -->
+                    <circle cx="110" cy="105" r="76" fill="none" stroke="#fde047" stroke-width="2.5" stroke-dasharray="8 6" opacity="0.75"/>
+                    <!-- 雙翼 -->
+                    <path d="M75,105 C30,55 10,75 20,125 C38,118 52,122 68,132 Z" fill="url(#wingGrad)" stroke="#fde047" stroke-width="2.5"/>
+                    <path d="M145,105 C190,55 210,75 200,125 C182,118 168,122 152,132 Z" fill="url(#wingGrad)" stroke="#fde047" stroke-width="2.5"/>
+                    <!-- 龍尾 -->
+                    <path d="M135,162 Q180,165 188,138 Q175,148 162,145" fill="none" stroke="url(#goldDragon)" stroke-width="10" stroke-linecap="round"/>
+                    <!-- 龍身 -->
+                    <ellipse cx="110" cy="142" rx="34" ry="42" fill="url(#goldDragon)" stroke="#fef9c3" stroke-width="2.5"/>
+                    <ellipse cx="110" cy="145" rx="20" ry="30" fill="#fef3c7"/>
+                    <!-- 龍頭 -->
+                    <circle cx="110" cy="84" r="34" fill="url(#goldDragon)" stroke="#fef9c3" stroke-width="2.5"/>
+                    <!-- 黃金龍角 -->
+                    <path d="M88,58 L72,26 L98,52 Z" fill="#fef08a" stroke="#d97706" stroke-width="2"/>
+                    <path d="M132,58 L148,26 L122,52 Z" fill="#fef08a" stroke="#d97706" stroke-width="2"/>
+                    <!-- 額頭星辰寶石 -->
+                    <polygon points="110,56 116,66 110,76 104,66" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5"/>
+                    <!-- 威風神采眼睛 -->
+                    <ellipse cx="96" cy="85" rx="7" ry="8" fill="#1e1b4b"/>
+                    <ellipse cx="124" cy="85" rx="7" ry="8" fill="#1e1b4b"/>
+                    <circle cx="98" cy="83" r="3" fill="#38bdf8"/>
+                    <circle cx="126" cy="83" r="3" fill="#38bdf8"/>
+                    <!-- 龍嘴微笑 -->
+                    <path d="M98,100 Q110,110 122,100" fill="none" stroke="#78350f" stroke-width="3" stroke-linecap="round"/>
+                    <!-- 閃耀星星 -->
+                    <polygon points="42,45 45,52 52,52 46,56 48,63 42,59 36,63 38,56 32,52 39,52" fill="#fef08a"/>
+                    <polygon points="178,42 180,48 186,48 181,51 183,57 178,53 173,57 175,51 170,48 176,48" fill="#fef08a"/>
+                </svg>
+            `,
+            // 2. 【史詩級】烈焰鳳凰 (Blazing Phoenix)
+            phoenix: `
+                <svg viewBox="0 0 220 220" class="w-full h-full">
+                    <defs>
+                        <linearGradient id="fireGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#fde047"/>
+                            <stop offset="45%" stop-color="#f97316"/>
+                            <stop offset="100%" stop-color="#dc2626"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- 華麗尾羽 -->
+                    <path d="M110,155 Q65,195 55,175 Q85,165 95,148" fill="#f97316" stroke="#fde047" stroke-width="2"/>
+                    <path d="M110,155 Q110,208 110,185" stroke="#ef4444" stroke-width="10" stroke-linecap="round"/>
+                    <path d="M110,155 Q155,195 165,175 Q135,165 125,148" fill="#f97316" stroke="#fde047" stroke-width="2"/>
+                    <!-- 烈焰雙翼 -->
+                    <path d="M80,108 C32,68 14,96 28,136 C46,125 60,128 76,136 Z" fill="url(#fireGrad)" stroke="#fef08a" stroke-width="2"/>
+                    <path d="M140,108 C188,68 206,96 192,136 C174,125 160,128 144,136 Z" fill="url(#fireGrad)" stroke="#fef08a" stroke-width="2"/>
+                    <!-- 身體與頭部 -->
+                    <ellipse cx="110" cy="136" rx="30" ry="36" fill="url(#fireGrad)" stroke="#fef08a" stroke-width="2"/>
+                    <circle cx="110" cy="84" r="30" fill="url(#fireGrad)" stroke="#fef08a" stroke-width="2"/>
+                    <!-- 頭頂三根火冠羽 -->
+                    <path d="M110,54 Q102,24 110,16 Q118,24 110,54 Z" fill="#fef08a"/>
+                    <path d="M96,58 Q80,34 86,28 Q96,38 96,58 Z" fill="#fb923c"/>
+                    <path d="M124,58 Q140,34 134,28 Q124,38 124,58 Z" fill="#fb923c"/>
+                    <!-- 鳳凰眼與金色鳥喙 -->
+                    <circle cx="97" cy="82" r="6.5" fill="#1e293b"/>
+                    <circle cx="123" cy="82" r="6.5" fill="#1e293b"/>
+                    <circle cx="99" cy="80" r="2.5" fill="#ffffff"/>
+                    <circle cx="125" cy="80" r="2.5" fill="#ffffff"/>
+                    <polygon points="103,92 117,92 110,105" fill="#fef08a" stroke="#b45309" stroke-width="1.5"/>
+                </svg>
+            `,
+            // 3. 【稀有級】疾風雷電獅鷲 (Storm Griffin)
+            griffin: `
+                <svg viewBox="0 0 220 220" class="w-full h-full">
+                    <defs>
+                        <linearGradient id="stormGrad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#7dd3fc"/>
+                            <stop offset="55%" stop-color="#0284c7"/>
+                            <stop offset="100%" stop-color="#1e3a8a"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- 雷電羽翼 -->
+                    <path d="M78,108 L26,74 L38,104 L22,116 L74,132 Z" fill="#fde047" stroke="#0284c7" stroke-width="2"/>
+                    <path d="M142,108 L194,74 L182,104 L198,116 L146,132 Z" fill="#fde047" stroke="#0284c7" stroke-width="2"/>
+                    <!-- 獅身 -->
+                    <ellipse cx="110" cy="142" rx="34" ry="38" fill="#f59e0b" stroke="#fef3c7" stroke-width="2"/>
+                    <!-- 胸前蓬鬆白羽 -->
+                    <path d="M84,116 Q110,148 136,116 Q125,110 110,114 Q95,110 84,116 Z" fill="#f8fafc"/>
+                    <!-- 鷹頭 -->
+                    <circle cx="110" cy="84" r="32" fill="url(#stormGrad)" stroke="#bae6fd" stroke-width="2.5"/>
+                    <!-- 尖耳羽 -->
+                    <polygon points="84,62 72,36 96,54" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.5"/>
+                    <polygon points="136,62 148,36 124,54" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.5"/>
+                    <!-- 銳利雙眼與鷹喙 -->
+                    <circle cx="96" cy="82" r="6.5" fill="#0f172a"/>
+                    <circle cx="124" cy="82" r="6.5" fill="#0f172a"/>
+                    <circle cx="98" cy="80" r="2.5" fill="#fde047"/>
+                    <circle cx="126" cy="80" r="2.5" fill="#fde047"/>
+                    <path d="M101,91 Q110,87 119,91 L110,106 Z" fill="#fbbf24" stroke="#78350f" stroke-width="1.5"/>
+                </svg>
+            `,
+            // 4. 【成長級】森之翡翠獨角獸 (Forest Unicorn)
+            unicorn: `
+                <svg viewBox="0 0 220 220" class="w-full h-full">
+                    <defs>
+                        <linearGradient id="uniMane" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#6ee7b7"/>
+                            <stop offset="50%" stop-color="#10b981"/>
+                            <stop offset="100%" stop-color="#047857"/>
+                        </linearGradient>
+                    </defs>
+                    <!-- 蓬鬆翡翠尾巴 -->
+                    <path d="M138,152 Q178,142 172,172 Q152,182 136,166 Z" fill="url(#uniMane)"/>
+                    <!-- 身體 -->
+                    <ellipse cx="110" cy="144" rx="32" ry="36" fill="#f8fafc" stroke="#a7f3d0" stroke-width="2.5"/>
+                    <!-- 頭部 -->
+                    <circle cx="110" cy="88" r="32" fill="#ffffff" stroke="#a7f3d0" stroke-width="2.5"/>
+                    <!-- 螺旋彩虹金角 -->
+                    <polygon points="110,22 101,58 119,58" fill="#fde047" stroke="#f59e0b" stroke-width="2"/>
+                    <line x1="105" y1="45" x2="115" y2="41" stroke="#f59e0b" stroke-width="2"/>
+                    <line x1="107" y1="34" x2="113" y2="31" stroke="#f59e0b" stroke-width="2"/>
+                    <!-- 翡翠鬃毛與雙耳 -->
+                    <polygon points="86,66 78,44 96,58" fill="#f8fafc" stroke="#6ee7b7" stroke-width="2"/>
+                    <polygon points="134,66 142,44 124,58" fill="#f8fafc" stroke="#6ee7b7" stroke-width="2"/>
+                    <path d="M88,62 Q110,74 132,62 Q122,52 110,54 Q98,52 88,62 Z" fill="url(#uniMane)"/>
+                    <!-- 溫柔大眼與腮紅 -->
+                    <circle cx="96" cy="88" r="6.5" fill="#064e3b"/>
+                    <circle cx="124" cy="88" r="6.5" fill="#064e3b"/>
+                    <circle cx="98" cy="86" r="2.5" fill="#ffffff"/>
+                    <circle cx="126" cy="86" r="2.5" fill="#ffffff"/>
+                    <ellipse cx="85" cy="98" rx="5" ry="3" fill="#fda4af"/>
+                    <ellipse cx="135" cy="98" rx="5" ry="3" fill="#fda4af"/>
+                    <path d="M103,101 Q110,107 117,101" fill="none" stroke="#065f46" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            `,
+            // 5. 【呆萌級】太陽花微笑史萊姆王 (Sunny Slime King)
+            slime: `
+                <svg viewBox="0 0 220 220" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="slimeGrad" cx="40%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fef08a"/>
+                            <stop offset="55%" stop-color="#facc15"/>
+                            <stop offset="100%" stop-color="#ea580c"/>
+                        </radialGradient>
+                    </defs>
+                    <ellipse cx="110" cy="182" rx="68" ry="12" fill="rgba(250,204,21,0.35)"/>
+                    <!-- 圓滾滾果凍身體 -->
+                    <path d="M44,145 C44,92 75,68 110,68 C145,68 176,92 176,145 C176,172 150,180 110,180 C70,180 44,172 44,145 Z" fill="url(#slimeGrad)" stroke="#fef9c3" stroke-width="3"/>
+                    <!-- 水潤反光 -->
+                    <ellipse cx="76" cy="98" rx="12" ry="6" transform="rotate(-25 76 98)" fill="#ffffff" opacity="0.7"/>
+                    <!-- 可愛小皇冠 -->
+                    <polygon points="88,68 84,44 98,56 110,40 122,56 136,44 132,68" fill="#fb7185" stroke="#fef08a" stroke-width="2"/>
+                    <!-- 超治癒笑眼與大笑容 -->
+                    <path d="M82,122 Q90,112 98,122" fill="none" stroke="#451a03" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M122,122 Q130,112 138,122" fill="none" stroke="#451a03" stroke-width="4" stroke-linecap="round"/>
+                    <ellipse cx="74" cy="134" rx="7" ry="4" fill="#fb7185" opacity="0.75"/>
+                    <ellipse cx="146" cy="134" rx="7" ry="4" fill="#fb7185" opacity="0.75"/>
+                    <path d="M96,136 Q110,154 124,136 Z" fill="#ef4444" stroke="#451a03" stroke-width="2.5"/>
+                </svg>
+            `
+        };
+
+        /* =====================================================================
+           3. 5種最終神獸資料設定
+           ===================================================================== */
+        const FINAL_PETS = [
+            {
+                id: 'dragon',
+                rarity: '【傳說級 SSR】',
+                rarityColor: 'text-amber-300 border-amber-400 bg-amber-500/20',
+                name: '星辰黃金聖龍',
+                minAccuracy: 90,
+                conditionText: '總答對率達 90% 以上',
+                quote: '「不可思議！你的八年級文法與單字基礎無懈可擊，星辰之力因你而覺醒！」',
+                svg: PET_SVGS.dragon
+            },
+            {
+                id: 'phoenix',
+                rarity: '【史詩級 SR】',
+                rarityColor: 'text-orange-300 border-orange-400 bg-orange-500/20',
+                name: '烈焰鳳凰',
+                minAccuracy: 75,
+                conditionText: '總答對率達 75% ~ 89%',
+                quote: '「熱血沸騰的表現！你的學習熱情就像不滅的聖火，繼續向前飛翔吧！」',
+                svg: PET_SVGS.phoenix
+            },
+            {
+                id: 'griffin',
+                rarity: '【稀有級 R】',
+                rarityColor: 'text-sky-300 border-sky-400 bg-sky-500/20',
+                name: '疾風雷電獅鷲',
+                minAccuracy: 60,
+                conditionText: '總答對率達 60% ~ 74%',
+                quote: '「穩健又敏捷的冒險者！你已經掌握了大部分核心觀念，再加把勁就能衝上巔峰！」',
+                svg: PET_SVGS.griffin
+            },
+            {
+                id: 'unicorn',
+                rarity: '【成長級 N+】',
+                rarityColor: 'text-emerald-300 border-emerald-400 bg-emerald-500/20',
+                name: '森之翡翠獨角獸',
+                minAccuracy: 40,
+                conditionText: '總答對率達 40% ~ 59%',
+                quote: '「你的堅持與努力治癒了森林！只要多複習幾個文法小錦囊，下次一定能進化得更強！」',
+                svg: PET_SVGS.unicorn
+            },
+            {
+                id: 'slime',
+                rarity: '【呆萌級 N】',
+                rarityColor: 'text-yellow-200 border-yellow-400 bg-yellow-500/20',
+                name: '太陽花微笑史萊姆王',
+                minAccuracy: 0,
+                conditionText: '完成 36 題冒險之旅',
+                quote: '「雖然路途有點挑戰，但你沒有放棄並走到了最後！我會每天用陽光笑容陪你一起複習英文！」',
+                svg: PET_SVGS.slime
+            }
+        ];
+
+        /* =====================================================================
+           4. 36道精選題庫 (台灣國中八年級核心文法與高頻單字，分三階段各12題)
+           題型說明：
+           - 'choice'  : 情境四選一
+           - 'reorder' : 單字卡重組排序題
+           - 'cloze'   : 點擊填空/克漏字變化題
+           ===================================================================== */
+        const QUESTIONS = [
+            // ==================== 第一階段：基礎孵化期 (Q1 - Q12) ====================
+            {
+                id: 1, stage: 1, category: '八年級高頻單字', type: 'choice',
+                context: '📍 情境：在便利商店買東西',
+                prompt: 'There are many convenience stores in Taiwan, so shopping here is very ______.',
+                translation: '台灣有很多便利商店，所以在這裡購物非常______。',
+                options: ['convenient', 'dangerous', 'expensive', 'difficult'],
+                answer: 'convenient',
+                explanation: 'convenient 是形容詞「方便的」。句中出現 convenience stores（便利商店），對應的形容詞就是 convenient 喔！'
+            },
+            {
+                id: 2, stage: 1, category: '過去式文法', type: 'choice',
+                context: '📍 情境：聊昨天晚上的休閒活動',
+                prompt: 'Kevin ______ a great movie with his family last night.',
+                translation: 'Kevin 昨晚和家人看了一部很棒的電影。',
+                options: ['watches', 'watched', 'will watch', 'is watching'],
+                answer: 'watched',
+                explanation: '看到時間副詞「last night（昨晚）」，代表動作發生在過去，動詞要使用過去式 watched！'
+            },
+            {
+                id: 3, stage: 1, category: '過去式文法', type: 'reorder',
+                context: '📍 情境：重組句子，表達昨天去圖書館讀書',
+                prompt: '請點擊下方單字卡，排出正確的英文句子：',
+                translation: '我昨天在圖書館讀了英文。',
+                words: ['studied', 'I', 'in the library', 'English', 'yesterday.'],
+                answer: 'I studied English in the library yesterday.',
+                explanation: '英文基本句型順序為「主詞(I) + 過去式動詞(studied) + 受詞(English) + 地點(in the library) + 時間(yesterday)」。地點通常放在時間前面喔！'
+            },
+            {
+                id: 4, stage: 1, category: '八年級高頻單字', type: 'cloze',
+                context: '📍 情境：生病去看醫生',
+                prompt: 'You have a bad cold. Remember to take the [ ______ ] on time and drink more water.',
+                translation: '你重感冒了。記得準時吃藥並多喝水。',
+                options: ['medicine', 'machine', 'magazine', 'mountain'],
+                answer: 'medicine',
+                explanation: 'take the medicine 是固定片語「吃藥」。machine 是機器，magazine 是雜誌，別搞混囉！'
+            },
+            {
+                id: 5, stage: 1, category: '未來式 (will / be going to)', type: 'choice',
+                context: '📍 情境：規劃這個週末的行程',
+                prompt: 'My classmates and I ______ go camping in Nantou this weekend.',
+                translation: '我和同學這週末要去南投露營。',
+                options: ['are going to', 'is going to', 'was going to', 'went to'],
+                answer: 'are going to',
+                explanation: '主詞「My classmates and I（我和同學們）」是複數，且時間為「this weekend（這週末，未來時間）」，所以 be 動詞用複數的 are going to！'
+            },
+            {
+                id: 6, stage: 1, category: '情緒分詞 (-ed / -ing)', type: 'choice',
+                context: '📍 情境：分享看棒球比賽的心情',
+                prompt: 'The baseball game was so ______, and all the fans felt very ______.',
+                translation: '這場棒球賽非常刺激，所有的球迷都感到很興奮。',
+                options: ['exciting; excited', 'excited; exciting', 'exciting; exciting', 'excited; excited'],
+                answer: 'exciting; excited',
+                explanation: '口訣：「事物令人...用 -ing；人感到...用 -ed」。比賽（事物）令人興奮用 exciting；球迷（人）感到興奮用 excited！'
+            },
+            {
+                id: 7, stage: 1, category: '八年級高頻單字', type: 'choice',
+                context: '📍 情境：稱讚媽媽的廚藝',
+                prompt: 'The beef noodles my mom made taste really ______. I ate two bowls!',
+                translation: '我媽媽煮的牛肉麵嚐起來真的很美味。我吃了兩碗！',
+                options: ['delicious', 'terrible', 'lonely', 'heavy'],
+                answer: 'delicious',
+                explanation: '後面說「我吃了兩碗」，表示牛肉麵非常「美味的 (delicious)」。terrible 是糟糕的。'
+            },
+            {
+                id: 8, stage: 1, category: '未來式 (will / be going to)', type: 'reorder',
+                context: '📍 情境：重組句子，詢問明天會不會下雨',
+                prompt: '請點擊下方單字卡，排出正確的疑問句：',
+                translation: '明天會下雨嗎？',
+                words: ['rain', 'Will', 'tomorrow?', 'it'],
+                answer: 'Will it rain tomorrow?',
+                explanation: '未來式助動詞 Will 疑問句結構：「Will + 主詞(it) + 原形動詞(rain) + 時間(tomorrow)?」天氣主詞記得用 it 代替！'
+            },
+            {
+                id: 9, stage: 1, category: '過去式文法', type: 'cloze',
+                context: '📍 情境：不規則動詞變化大考驗',
+                prompt: 'Amy [ ______ ] a cute dog on her way home two days ago, and she took it home.',
+                translation: 'Amy 兩天前在回家路上發現一隻可愛的狗，並把牠帶回家。',
+                options: ['found', 'finded', 'finds', 'finding'],
+                answer: 'found',
+                explanation: 'two days ago（兩天前）要用過去式！find（發現）是不規則動詞，過去式是 found，不是加 -ed 喔！'
+            },
+            {
+                id: 10, stage: 1, category: '八年級高頻單字', type: 'choice',
+                context: '📍 情境：上班尖峰時段的馬路',
+                prompt: 'Sorry I am late. The ______ on the road was very heavy this morning.',
+                translation: '抱歉我遲到了。今天早上路上的交通非常擁擠。',
+                options: ['traffic', 'weather', 'holiday', 'present'],
+                answer: 'traffic',
+                explanation: 'heavy traffic 表示「交通擁擠」，traffic（交通）是不可數名詞，搭配 heavy 使用是國中會考常見考點！'
+            },
+            {
+                id: 11, stage: 1, category: '情緒分詞 (-ed / -ing)', type: 'cloze',
+                context: '📍 情境：對這本書沒興趣',
+                prompt: 'Eric is [ ______ ] in history, so he thinks this history book is very interesting.',
+                translation: 'Eric 對歷史很感興趣，所以他覺得這本歷史書很有趣。',
+                options: ['interested', 'interesting', 'interest', 'interests'],
+                answer: 'interested',
+                explanation: 'be interested in... 是固定片語「對...感興趣」，主詞是人（Eric），所以用過去分詞 interested！'
+            },
+            {
+                id: 12, stage: 1, category: '八年級高頻單字', type: 'reorder',
+                context: '📍 情境：第一階段Boss題！重組句子',
+                prompt: '請點擊下方單字卡，完成這句鼓勵的話：',
+                translation: '我們正在為明天的英文考試做準備。',
+                words: ['preparing for', 'We', 'tomorrow’s English test.', 'are'],
+                answer: 'We are preparing for tomorrow’s English test.',
+                explanation: 'prepare for... 意為「為...做準備」，搭配 be 動詞 are + V-ing 形成現在進行式「正在準備」。恭喜完成第一階段！'
+            },
+
+            // ==================== 第二階段：裂殼成長期 (Q13 - Q24) ====================
+            {
+                id: 13, stage: 2, category: '比較級與最高級', type: 'choice',
+                context: '📍 情境：比較兩位兄弟的身高',
+                prompt: 'Ben is 175 cm tall, and his brother is 168 cm tall. Ben is ______ than his brother.',
+                translation: 'Ben 身高 175 公分，他弟弟 168 公分。Ben 比他弟弟高。',
+                options: ['taller', 'tallest', 'more tall', 'the tallest'],
+                answer: 'taller',
+                explanation: '兩者比較用「比較級」，句中有關鍵字 than（比），單音節形容詞 tall 直接加 -er 變成 taller！'
+            },
+            {
+                id: 14, stage: 2, category: '動名詞與不定詞 (V-ing / to V)', type: 'choice',
+                context: '📍 情境：下課後的社團練習',
+                prompt: 'The students enjoy ______ basketball together after school every day.',
+                translation: '學生們每天放學後都很享受一起打籃球。',
+                options: ['playing', 'to play', 'play', 'played'],
+                answer: 'playing',
+                explanation: 'enjoy（享受）後面只能接「動名詞 (V-ing)」當受詞！常見接 V-ing 的動詞還有 practice, finish, keep。'
+            },
+            {
+                id: 15, stage: 2, category: '比較級與最高級', type: 'cloze',
+                context: '📍 情境：三者以上的最高級比較',
+                prompt: 'Mount Jade (玉山) is the [ ______ ] mountain in Taiwan.',
+                translation: '玉山是台灣最高的山。',
+                options: ['highest', 'higher', 'high', 'most high'],
+                answer: 'highest',
+                explanation: '在台灣所有的山之中（三者以上），要用「最高級」，且最高級前面通常有定冠詞 the，high 加 -est 變成 highest！'
+            },
+            {
+                id: 16, stage: 2, category: '動名詞與不定詞 (V-ing / to V)', type: 'reorder',
+                context: '📍 情境：重組句子，表達決定要買什麼',
+                prompt: '請點擊下方單字卡，排出正確句子：',
+                translation: 'Lisa 決定買一件新的洋裝。',
+                words: ['to buy', 'decided', 'Lisa', 'a new dress.'],
+                answer: 'Lisa decided to buy a new dress.',
+                explanation: 'decide（決定）後面要接「不定詞 (to + 原形動詞)」，即 decide to buy！其他常見接 to V 的動詞有 want, plan, need, hope。'
+            },
+            {
+                id: 17, stage: 2, category: '連接詞與時態一致', type: 'choice',
+                context: '📍 情境：天氣變冷了要多穿衣服',
+                prompt: '______ it was very cold outside, Grandpa still went jogging in the park.',
+                translation: '雖然外面很冷，爺爺仍然去公園慢跑。',
+                options: ['Although', 'Because', 'If', 'When'],
+                answer: 'Although',
+                explanation: '前後語意轉折：「外面很冷」與「仍然去慢跑」相反，所以要用表示「雖然」的連接詞 Although！注意英文中 Although 和 but 不能同時出現喔。'
+            },
+            {
+                id: 18, stage: 2, category: '比較級與最高級', type: 'choice',
+                context: '📍 情境：多音節形容詞的比較級',
+                prompt: 'I think learning English is ______ than learning math.',
+                translation: '我覺得學英文比學數學更有趣。',
+                options: ['more interesting', 'interestinger', 'most interesting', 'very interesting'],
+                answer: 'more interesting',
+                explanation: 'interesting 是多音節形容詞，比較級不能加 -er，要在前面加上 more，變成 more interesting than！'
+            },
+            {
+                id: 19, stage: 2, category: '動名詞與不定詞 (V-ing / to V)', type: 'cloze',
+                context: '📍 情境：練習說英文',
+                prompt: 'If you want to speak English well, you need to practice [ ______ ] it every day.',
+                translation: '如果你想把英文說好，你需要每天練習說英文。',
+                options: ['speaking', 'to speak', 'spoke', 'speaks'],
+                answer: 'speaking',
+                explanation: 'practice（練習）是國中必考動詞，後面一定要接 V-ing！所以是 practice speaking。'
+            },
+            {
+                id: 20, stage: 2, category: '連接詞與時態一致', type: 'choice',
+                context: '📍 情境：條件句的「現在式代替未來式」',
+                prompt: 'If it ______ sunny tomorrow, we will have a picnic by the lake.',
+                translation: '如果明天是晴天，我們就會去湖邊野餐。',
+                options: ['is', 'will be', 'was', 'are'],
+                answer: 'is',
+                explanation: '大魔王考點！在 If（如果）或 When（當...時）引導的副詞子句中，要用「現在簡單式」代替未來式，主詞 it 搭配 is！'
+            },
+            {
+                id: 21, stage: 2, category: '動名詞與不定詞 (V-ing / to V)', type: 'choice',
+                context: '📍 情境：用「動名詞當主詞」開頭',
+                prompt: '______ enough sleep every night is very important for junior high school students.',
+                translation: '每晚有充足的睡眠對國中生來說非常重要。',
+                options: ['Having', 'Have', 'Has', 'Had'],
+                answer: 'Having',
+                explanation: '動詞不能直接當句子的主詞，必須變成「動名詞 (V-ing)」或「不定詞 (to V)」，且視為單數主詞（後面配 is），所以選 Having！'
+            },
+            {
+                id: 22, stage: 2, category: '連接詞與時態一致', type: 'reorder',
+                context: '📍 情境：重組句子，說明昨晚媽媽回家時我正在做的事',
+                prompt: '請點擊下方單字卡，排出正確句子：',
+                translation: '當媽媽昨晚回家時，我正在做功課。',
+                words: ['When', 'was doing', 'Mom came home last night,', 'I', 'my homework.'],
+                answer: 'When Mom came home last night, I was doing my homework.',
+                explanation: '過去某個時間點「正在進行」的動作，要用過去進行式 (was/were + V-ing)！所以「我正在做功課」用 was doing。'
+            },
+            {
+                id: 23, stage: 2, category: '比較級與最高級', type: 'cloze',
+                context: '📍 情境：副詞比較級的運用',
+                prompt: 'David runs much [ ______ ] than any other student in his class.',
+                translation: 'David 跑得比班上其他任何學生都還要快得多。',
+                options: ['faster', 'fastest', 'fastly', 'more fast'],
+                answer: 'faster',
+                explanation: 'fast 的形容詞與副詞同形，比較級都是 faster！前面的 much 是用來修飾比較級「快得多」。'
+            },
+            {
+                id: 24, stage: 2, category: '動名詞與不定詞 (V-ing / to V)', type: 'choice',
+                context: '📍 情境：第二階段Boss題！forget to V vs. forget V-ing',
+                prompt: 'Don’t forget ______ off the lights before you leave the classroom.',
+                translation: '離開教室前，別忘了要關燈。',
+                options: ['to turn', 'turning', 'turned', 'turns'],
+                answer: 'to turn',
+                explanation: 'forget to V 表示「忘記去做某事（還沒做）」；forget V-ing 表示「忘記曾做過某事」。離開教室前還沒關燈，所以用 forget to turn！恭喜突破第二階段！'
+            },
+
+            // ==================== 第三階段：神獸覺醒期 (Q25 - Q36) ====================
+            {
+                id: 25, stage: 3, category: '使役與感官動詞', type: 'choice',
+                context: '📍 情境：爸爸要求我打掃房間',
+                prompt: 'My dad made me ______ my bedroom before I could play video games.',
+                translation: '我爸爸叫我在玩電動前先把房間打掃乾淨。',
+                options: ['clean', 'to clean', 'cleaning', 'cleaned'],
+                answer: 'clean',
+                explanation: '使役動詞 make / let / have + 受詞 + 「原形動詞」！所以 made me 後面直接接原形動詞 clean，千萬不能加 to 喔！'
+            },
+            {
+                id: 26, stage: 3, category: '反身代名詞', type: 'choice',
+                context: '📍 情境：在派對上盡情玩樂',
+                prompt: 'Boys and girls, help ______ to the snacks and drinks on the table!',
+                translation: '各位同學，請隨意享用桌上的點心和飲料！',
+                options: ['yourselves', 'yourself', 'themselves', 'ourselves'],
+                answer: 'yourselves',
+                explanation: 'help oneself to... 是「隨意享用...」。因為前面稱呼 Boys and girls（各位，複數），反身代名詞要用複數的 yourselves！'
+            },
+            {
+                id: 27, stage: 3, category: '使役與感官動詞', type: 'cloze',
+                context: '📍 情境：經過音樂教室時聽到的聲音',
+                prompt: 'When I walked past the music room, I heard someone [ ______ ] the piano.',
+                translation: '當我走過音樂教室時，我聽到有人正在彈鋼琴。',
+                options: ['playing', 'to play', 'played', 'plays'],
+                answer: 'playing',
+                explanation: '感官動詞 see / hear / watch + 受詞 + 「原形動詞 或 V-ing（強調動作正在進行）」。走過時聽到「正在彈」，用 playing 最傳神！'
+            },
+            {
+                id: 28, stage: 3, category: '頻率副詞位置', type: 'reorder',
+                context: '📍 情境：重組句子，注意頻率副詞的位置口訣',
+                prompt: '請點擊下方單字卡，排出正確句子：',
+                translation: 'Tom 上學從不遲到。',
+                words: ['late', 'never', 'is', 'Tom', 'for school.'],
+                answer: 'Tom is never late for school.',
+                explanation: '頻率副詞位置口訣：「be 動詞、助動詞之後；一般動詞之前」。句中有 be 動詞 is，所以 never 要放在 is 的後面！'
+            },
+            {
+                id: 29, stage: 3, category: '數量不定代名詞', type: 'choice',
+                context: '📍 情境：班上大部分的學生都喜歡體育課',
+                prompt: '______ of the students in our class like PE class very much.',
+                translation: '我們班上大部分的學生都非常喜歡體育課。',
+                options: ['Most', 'One', 'Both', 'Every'],
+                answer: 'Most',
+                explanation: '後面的動詞是複數的 like，所以前面主詞必須是複數！「Most of the students（大部分的學生）」是複數；One of... 動詞要配單數 likes 喔！'
+            },
+            {
+                id: 30, stage: 3, category: '反身代名詞', type: 'cloze',
+                context: '📍 情境：自己完成困難的任務',
+                prompt: 'Nobody helped Jenny with the science project. She finished it all by [ ______ ].',
+                translation: '沒有人幫 Jenny 做自然科專題。她完全靠自己完成的。',
+                options: ['herself', 'himself', 'myself', 'itself'],
+                answer: 'herself',
+                explanation: 'by oneself 意為「獨自地、靠自己」。主詞是女生 She (Jenny)，所以反身代名詞用 herself！'
+            },
+            {
+                id: 31, stage: 3, category: '授與動詞用法', type: 'choice',
+                context: '📍 情境：買生日禮物送給好朋友',
+                prompt: 'Brian bought a cool comic book ______ his best friend on his birthday.',
+                translation: 'Brian 在他好朋友生日時買了一本很酷的漫畫書送他。',
+                options: ['for', 'to', 'with', 'at'],
+                answer: 'for',
+                explanation: '授與動詞口訣：buy / make / cook（買、做、煮）物品給某人，介系詞要搭配「for」！如果是 give / send / show 則搭配 to。'
+            },
+            {
+                id: 32, stage: 3, category: '使役與感官動詞', type: 'reorder',
+                context: '📍 情境：重組句子，感謝老師讓我們看英文電影',
+                prompt: '請點擊下方單字卡，排出正確句子：',
+                translation: '我們的英文老師今天讓我們看了一部有趣的電影。',
+                words: ['let', 'watch', 'Our English teacher', 'us', 'a funny movie today.'],
+                answer: 'Our English teacher let us watch a funny movie today.',
+                explanation: '使役動詞 let + 受詞(us) + 原形動詞(watch)！注意 let 的過去式還是 let 喔！'
+            },
+            {
+                id: 33, stage: 3, category: '數量不定代名詞', type: 'choice',
+                context: '📍 情境：桌上有兩支筆的用法',
+                prompt: 'There are two pens on the desk. ______ of them is red, and the other is blue.',
+                translation: '桌上有兩支筆。其中一支是紅色的，另一支是藍色的。',
+                options: ['One', 'Both', 'All', 'Some'],
+                answer: 'One',
+                explanation: '兩者之中「一個...，另一個...」固定用「One..., and the other...」，且 One 搭配單數動詞 is！'
+            },
+            {
+                id: 34, stage: 3, category: '八年級高頻單字', type: 'cloze',
+                context: '📍 情境：分享難忘的旅行經驗',
+                prompt: 'Visiting Japan with my family last summer was a wonderful [ ______ ] for me.',
+                translation: '去年夏天和家人一起去日本玩對我來說是一次很棒的經驗。',
+                options: ['experience', 'exercise', 'example', 'entrance'],
+                answer: 'experience',
+                explanation: 'experience 當名詞有「經驗、經歷」的意思（可數）。exercise 是運動/練習，example 是例子。'
+            },
+            {
+                id: 35, stage: 3, category: '使役與感官動詞', type: 'choice',
+                context: '📍 情境：感官動詞與連綴動詞的結合',
+                prompt: 'The music sounds ______, and it makes me ______ relaxed.',
+                translation: '這首音樂聽起來很美妙，而且它讓我感到很放鬆。',
+                options: ['wonderful; feel', 'wonderfully; to feel', 'wonderful; feeling', 'wonderfully; feel'],
+                answer: 'wonderful; feel',
+                explanation: '第一格：連綴動詞 sound（聽起來）後面直接接「形容詞 wonderful」；第二格：使役動詞 makes + me + 「原形動詞 feel」！'
+            },
+            {
+                id: 36, stage: 3, category: '綜合文法大挑戰', type: 'reorder',
+                context: '📍 情境：最終覺醒 Boss 題！重組這句充滿力量的話',
+                prompt: '請點擊下方單字卡，完成這句最終通關咒語：',
+                translation: '如果我們每天練習英文，我們就會變得越來越強！',
+                words: ['stronger and stronger!', 'we will become', 'If we practice English every day,'],
+                answer: 'If we practice English every day, we will become stronger and stronger!',
+                explanation: '完美結合了「If 條件句現在式代替未來式」與「比較級 + and + 比較級（越來越...）」！恭喜你完成全部 36 道關卡！'
+            }
+        ];
+
+        /* =====================================================================
+           5. 遊戲狀態管理變數
+           ===================================================================== */
+        let gameState = {
+            studentName: '',
+            currentIndex: 0,
+            score: 0,
+            combo: 0,
+            maxCombo: 0,
+            correctCount: 0,
+            answered: false,
+            selectedWords: [], // 用於重組題
+            selectedCloze: null, // 用於克漏字題
+            categoryStats: {}, // 紀錄各文法分類的 { total, correct }
+            unlockedPetIds: JSON.parse(localStorage.getItem('fantasy_egg_unlocked') || '[]')
+        };
+
+        // 初始化頁面時渲染歡迎畫面的神秘蛋
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('welcomeEggPreview').innerHTML = PET_SVGS.egg;
+        });
+
+        /* =====================================================================
+           6. 遊戲流程控制函式
+           ===================================================================== */
+        function startGame() {
+            const input = document.getElementById('studentNameInput');
+            const name = input.value.trim();
+            const errMsg = document.getElementById('nameErrorMsg');
+
+            if (!name) {
+                errMsg.classList.remove('hidden');
+                input.classList.add('border-rose-500', 'animate-shake');
+                setTimeout(() => input.classList.remove('animate-shake'), 400);
+                SFX.wrong();
+                return;
+            }
+
+            errMsg.classList.add('hidden');
+            SFX.evolve();
+
+            // 重置遊戲狀態
+            gameState = {
+                ...gameState,
+                studentName: name,
+                currentIndex: 0,
+                score: 0,
+                combo: 0,
+                maxCombo: 0,
+                correctCount: 0,
+                answered: false,
+                selectedWords: [],
+                selectedCloze: null,
+                categoryStats: {}
+            };
+
+            // 初始化文法分類統計
+            QUESTIONS.forEach(q => {
+                if (!gameState.categoryStats[q.category]) {
+                    gameState.categoryStats[q.category] = { total: 0, correct: 0 };
+                }
+            });
+
+            document.getElementById('displayStudentName').textContent = name;
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('stageBreakScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+
+            updateIncubatorUI();
+            renderQuestion();
+        }
+
+        function restartGame() {
+            SFX.click();
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('welcomeScreen').classList.remove('hidden');
+        }
+
+        // 點擊培養皿互動小彩蛋
+        function pokeEgg() {
+            SFX.click();
+            const container = document.getElementById('incubatorContainer');
+            container.classList.remove('animate-wobble');
+            void container.offsetWidth; // 觸發重繪
+            container.classList.add('animate-wobble');
+
+            const messages = [
+                '「感覺到溫暖的能量了！繼續答題吧！」',
+                '「喀啦喀啦... 裡面的小生命好像很開心！」',
+                '「連擊數越高，孵出的神獸越厲害喔！」',
+                '「加油！你的英文文法越來越強了！」'
+            ];
+            document.getElementById('petStatusText').textContent = messages[Math.floor(Math.random() * messages.length)];
+        }
+
+        // 更新左側培養皿外觀與能量條
+        function updateIncubatorUI() {
+            const qNum = gameState.currentIndex + 1;
+            const energyPct = Math.min(100, Math.round((gameState.correctCount / QUESTIONS.length) * 100));
+
+            document.getElementById('scoreDisplay').textContent = gameState.score;
+            document.getElementById('energyPercentText').textContent = `${energyPct}%`;
+            document.getElementById('energyBar').style.width = `${energyPct}%`;
+
+            // 連擊徽章
+            const comboBadge = document.getElementById('comboBadge');
+            if (gameState.combo >= 2) {
+                comboBadge.classList.remove('hidden');
+                comboBadge.textContent = `🔥 ${gameState.combo} 連擊！`;
+            } else {
+                comboBadge.classList.add('hidden');
+            }
+
+            // 依據目前題數階段切換培養皿外觀
+            const container = document.getElementById('incubatorContainer');
+            const stageBadge = document.getElementById('petStageBadge');
+            const statusText = document.getElementById('petStatusText');
+
+            // 更新階段指示燈
+            [1, 2, 3].forEach(s => {
+                const pill = document.getElementById(`stagePill${s}`);
+                const currentStage = qNum <= 12 ? 1 : (qNum <= 24 ? 2 : 3);
+                if (s === currentStage) {
+                    pill.className = 'p-2 rounded-xl bg-indigo-600/60 border-2 border-amber-400 text-white font-bold shadow';
+                } else if (s < currentStage) {
+                    pill.className = 'p-2 rounded-xl bg-emerald-900/50 border border-emerald-500/50 text-emerald-300 font-bold';
+                } else {
+                    pill.className = 'p-2 rounded-xl bg-slate-800/60 border border-slate-700 text-slate-400 font-bold';
+                }
+            });
+
+            if (qNum <= 12) {
+                stageBadge.textContent = '階段 1：沉睡的神秘蛋';
+                stageBadge.className = 'px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold';
+                container.innerHTML = PET_SVGS.egg;
+                if (!gameState.answered) {
+                    statusText.textContent = '「蛋殼散發著溫暖的光芒，等待能量注入...」';
+                }
+            } else if (qNum <= 24) {
+                stageBadge.textContent = '階段 2：裂殼覺醒中';
+                stageBadge.className = 'px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/40 font-bold';
+                container.innerHTML = PET_SVGS.crackedEgg;
+                if (!gameState.answered) {
+                    statusText.textContent = '「蛋殼裂開了！一雙閃亮的大眼睛正看著你！」';
+                }
+            } else {
+                stageBadge.textContent = '階段 3：神獸幼年體';
+                stageBadge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold';
+                container.innerHTML = PET_SVGS.babyHatchling;
+                if (!gameState.answered) {
+                    statusText.textContent = '「幼獸破殼而出！最後 12 題將決定它的最終進化！」';
+                }
+            }
+        }
+
+        /* =====================================================================
+           7. 題目渲染與三種互動題型處理
+           ===================================================================== */
+        function renderQuestion() {
+            const q = QUESTIONS[gameState.currentIndex];
+            gameState.answered = false;
+            gameState.selectedWords = [];
+            gameState.selectedCloze = null;
+
+            // 隱藏回饋與按鈕
+            document.getElementById('feedbackBox').classList.add('hidden');
+            document.getElementById('nextBtnRow').classList.add('hidden');
+            document.getElementById('submitActionRow').classList.add('hidden');
+
+            // 設定題目標題與標籤
+            document.getElementById('questionNumberBadge').textContent = `Q ${q.id} / ${QUESTIONS.length}`;
+            document.getElementById('questionCategoryBadge').textContent = q.category;
+
+            const typeLabels = {
+                'choice': '🎯 情境四選一',
+                'reorder': '🧩 單字卡重組排序',
+                'cloze': '✍️ 點擊填空挑戰'
+            };
+            document.getElementById('questionTypeBadge').textContent = typeLabels[q.type];
+
+            // 情境框
+            const ctxBox = document.getElementById('questionContextBox');
+            if (q.context) {
+                ctxBox.textContent = q.context;
+                ctxBox.classList.remove('hidden');
+            } else {
+                ctxBox.classList.add('hidden');
+            }
+
+            document.getElementById('questionTranslation').textContent = `中文提示：${q.translation}`;
+
+            const answerArea = document.getElementById('interactiveAnswerArea');
+            answerArea.innerHTML = '';
+
+            // --- 題型 1：經典情境四選一 ---
+            if (q.type === 'choice') {
+                document.getElementById('questionPrompt').textContent = q.prompt;
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3.5';
+
+                const labels = ['A', 'B', 'C', 'D'];
+                q.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn w-full text-left p-4 rounded-2xl bg-slate-800/90 hover:bg-indigo-900/70 border-2 border-slate-600 hover:border-amber-400 transition flex items-center gap-3.5 group';
+                    btn.dataset.value = opt;
+                    btn.innerHTML = `
+                        <span class="w-9 h-9 rounded-xl bg-slate-700 group-hover:bg-amber-400 group-hover:text-slate-950 font-display font-black flex items-center justify-center text-amber-300 transition shrink-0">
+                            ${labels[idx]}
+                        </span>
+                        <span class="text-lg font-bold text-white">${opt}</span>
+                    `;
+                    btn.onclick = () => handleChoiceSelect(opt, btn);
+                    grid.appendChild(btn);
+                });
+                answerArea.appendChild(grid);
+            }
+
+            // --- 題型 2：單字卡重組排序題 ---
+            else if (q.type === 'reorder') {
+                document.getElementById('questionPrompt').textContent = q.prompt;
+                document.getElementById('submitActionRow').classList.remove('hidden');
+
+                // 打亂單字順序
+                const shuffled = [...q.words].sort(() => Math.random() - 0.5);
+
+                answerArea.innerHTML = `
+                    <div class="mb-4">
+                        <div class="text-xs font-bold text-emerald-300 mb-2">👇 你的組句區（點擊已選單字可取消放回）：</div>
+                        <div id="reorderDropZone" class="min-h-[68px] p-3.5 rounded-2xl bg-slate-900/90 border-2 border-dashed border-indigo-400/60 flex flex-wrap gap-2.5 items-center">
+                            <span class="text-slate-500 text-sm italic" id="reorderPlaceholder">請依序點擊下方單字卡來組成句子...</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-amber-300 mb-2">📦 可選單字卡庫：</div>
+                        <div id="reorderWordBank" class="flex flex-wrap gap-2.5"></div>
+                    </div>
+                `;
+
+                const bank = document.getElementById('reorderWordBank');
+                shuffled.forEach((word, idx) => {
+                    const chip = document.createElement('button');
+                    chip.type = 'button';
+                    chip.className = 'word-chip px-4 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold text-base sm:text-lg border border-slate-500';
+                    chip.textContent = word;
+                    chip.dataset.idx = idx;
+                    chip.onclick = () => toggleReorderWord(word, idx, chip);
+                    bank.appendChild(chip);
+                });
+            }
+
+            // --- 題型 3：點擊填空/克漏字變化題 ---
+            else if (q.type === 'cloze') {
+                // 將題幹中的 [ ______ ] 轉換成互動空格
+                const formattedPrompt = q.prompt.replace(
+                    '[ ______ ]',
+                    `<span id="clozeSlot" class="inline-block min-w-[130px] px-4 py-1 mx-1 rounded-xl bg-indigo-950 border-2 border-dashed border-amber-400 text-amber-300 text-center font-display">? ? ?</span>`
+                );
+                document.getElementById('questionPrompt').innerHTML = formattedPrompt;
+                document.getElementById('submitActionRow').classList.remove('hidden');
+
+                const optContainer = document.createElement('div');
+                optContainer.className = 'mt-4';
+                optContainer.innerHTML = `<div class="text-xs font-bold text-amber-300 mb-2.5">👇 請點選最適合填入空格的單字或變化形：</div>`;
+
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-2 sm:grid-cols-4 gap-3';
+
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'cloze-opt-btn py-3.5 px-4 rounded-2xl bg-slate-800 hover:bg-indigo-800/80 border-2 border-slate-600 text-white font-bold text-lg transition text-center';
+                    btn.textContent = opt;
+                    btn.onclick = () => selectClozeOption(opt, btn);
+                    grid.appendChild(btn);
+                });
+
+                optContainer.appendChild(grid);
+                answerArea.appendChild(optContainer);
+            }
+        }
+
+        // 題型 1 點擊處理
+        function handleChoiceSelect(selectedOpt, clickedBtn) {
+            if (gameState.answered) return;
+            const q = QUESTIONS[gameState.currentIndex];
+            const isCorrect = selectedOpt === q.answer;
+
+            // 標記按鈕顏色
+            document.querySelectorAll('.choice-btn').forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.value === q.answer) {
+                    btn.className = 'choice-btn w-full text-left p-4 rounded-2xl bg-emerald-900/80 border-2 border-emerald-400 text-white flex items-center gap-3.5 shadow-lg shadow-emerald-500/20';
+                } else if (btn === clickedBtn && !isCorrect) {
+                    btn.className = 'choice-btn w-full text-left p-4 rounded-2xl bg-rose-900/80 border-2 border-rose-500 text-white flex items-center gap-3.5 animate-shake';
+                } else {
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            processAnswerResult(isCorrect, q);
+        }
+
+        // 題型 2 單字卡點擊切換
+        function toggleReorderWord(word, idx, chipBtn) {
+            if (gameState.answered) return;
+            SFX.click();
+
+            const existingPos = gameState.selectedWords.findIndex(item => item.idx === idx);
+            if (existingPos > -1) {
+                // 從組句區移除，恢復單字庫按鈕
+                gameState.selectedWords.splice(existingPos, 1);
+                chipBtn.classList.remove('opacity-30', 'pointer-events-none');
+            } else {
+                // 加入組句區
+                gameState.selectedWords.push({ word, idx });
+                chipBtn.classList.add('opacity-30', 'pointer-events-none');
+            }
+
+            renderReorderDropZone();
+        }
+
+        function renderReorderDropZone() {
+            const dropZone = document.getElementById('reorderDropZone');
+            dropZone.innerHTML = '';
+
+            if (gameState.selectedWords.length === 0) {
+                dropZone.innerHTML = `<span class="text-slate-500 text-sm italic">請依序點擊下方單字卡來組成句子...</span>`;
+                return;
+            }
+
+            gameState.selectedWords.forEach((item) => {
+                const selectedChip = document.createElement('button');
+                selectedChip.type = 'button';
+                selectedChip.className = 'word-chip-selected px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base sm:text-lg border border-emerald-300';
+                selectedChip.textContent = item.word;
+                selectedChip.onclick = () => {
+                    if (gameState.answered) return;
+                    const originalBtn = document.querySelector(`#reorderWordBank button[data-idx="${item.idx}"]`);
+                    toggleReorderWord(item.word, item.idx, originalBtn);
+                };
+                dropZone.appendChild(selectedChip);
+            });
+        }
+
+        // 題型 3 克漏字選項點擊
+        function selectClozeOption(opt, btn) {
+            if (gameState.answered) return;
+            SFX.click();
+            gameState.selectedCloze = opt;
+
+            const slot = document.getElementById('clozeSlot');
+            slot.textContent = opt;
+            slot.className = 'inline-block min-w-[130px] px-4 py-1 mx-1 rounded-xl bg-amber-400 text-slate-950 font-black text-center shadow';
+
+            document.querySelectorAll('.cloze-opt-btn').forEach(b => {
+                b.className = 'cloze-opt-btn py-3.5 px-4 rounded-2xl bg-slate-800 hover:bg-indigo-800/80 border-2 border-slate-600 text-white font-bold text-lg transition text-center';
+            });
+            btn.className = 'cloze-opt-btn py-3.5 px-4 rounded-2xl bg-indigo-600 border-2 border-amber-400 text-amber-300 font-black text-lg transition text-center shadow-lg';
+        }
+
+        // 送出重組題或克漏字答案
+        function submitComplexAnswer() {
+            if (gameState.answered) return;
+            const q = QUESTIONS[gameState.currentIndex];
+
+            if (q.type === 'reorder') {
+                if (gameState.selectedWords.length === 0) {
+                    SFX.wrong();
+                    const dz = document.getElementById('reorderDropZone');
+                    dz.classList.add('border-rose-500', 'animate-shake');
+                    setTimeout(() => dz.classList.remove('border-rose-500', 'animate-shake'), 400);
+                    return;
+                }
+                const userSentence = gameState.selectedWords.map(w => w.word).join(' ');
+                const isCorrect = userSentence === q.answer;
+                processAnswerResult(isCorrect, q);
+            } else if (q.type === 'cloze') {
+                if (!gameState.selectedCloze) {
+                    SFX.wrong();
+                    const slot = document.getElementById('clozeSlot');
+                    slot.classList.add('border-rose-500', 'animate-shake');
+                    setTimeout(() => slot.classList.remove('border-rose-500', 'animate-shake'), 400);
+                    return;
+                }
+                const isCorrect = gameState.selectedCloze === q.answer;
+                const slot = document.getElementById('clozeSlot');
+                slot.textContent = q.answer;
+                slot.className = isCorrect
+                    ? 'inline-block min-w-[130px] px-4 py-1 mx-1 rounded-xl bg-emerald-500 text-slate-950 font-black text-center'
+                    : 'inline-block min-w-[130px] px-4 py-1 mx-1 rounded-xl bg-rose-500 text-white font-black text-center';
+                processAnswerResult(isCorrect, q);
+            }
+        }
+
+        /* =====================================================================
+           8. 批改計分、即時回饋與培養皿動畫
+           ===================================================================== */
+        function processAnswerResult(isCorrect, q) {
+            gameState.answered = true;
+            document.getElementById('submitActionRow').classList.add('hidden');
+
+            // 紀錄文法分類統計
+            gameState.categoryStats[q.category].total += 1;
+
+            const feedbackBox = document.getElementById('feedbackBox');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackTitle = document.getElementById('feedbackTitle');
+            const feedbackCorrectAnswer = document.getElementById('feedbackCorrectAnswer');
+            const feedbackExplanation = document.getElementById('feedbackExplanation');
+
+            if (isCorrect) {
+                gameState.correctCount += 1;
+                gameState.combo += 1;
+                if (gameState.combo > gameState.maxCombo) {
+                    gameState.maxCombo = gameState.combo;
+                }
+                gameState.categoryStats[q.category].correct += 1;
+
+                // 計分規則：基礎 100 分 + 連擊加成 (每連擊 +15 分，上限 +75)
+                const comboBonus = Math.min(75, (gameState.combo - 1) * 15);
+                const earned = 100 + comboBonus;
+                gameState.score += earned;
+
+                if (gameState.combo >= 3) {
+                    SFX.combo();
+                } else {
+                    SFX.correct();
+                }
+
+                // 培養皿歡呼震動
+                const container = document.getElementById('incubatorContainer');
+                container.classList.remove('animate-wobble');
+                void container.offsetWidth;
+                container.classList.add('animate-wobble');
+                document.getElementById('petStatusText').textContent = `「太棒了！吸收了 +${earned} 點孵化能量！✨」`;
+
+                feedbackBox.className = 'rounded-2xl p-5 mb-6 bg-emerald-950/80 border-2 border-emerald-400 animate-pop-in';
+                feedbackIcon.textContent = gameState.combo >= 3 ? '🔥' : '🎉';
+                feedbackTitle.className = 'font-black text-lg text-emerald-300 mb-1';
+                feedbackTitle.textContent = gameState.combo >= 3
+                    ? `超神連擊 (${gameState.combo} Combo)！獲得 +${earned} 分！`
+                    : `答對囉！獲得 +${earned} 孵化積分！`;
+                feedbackCorrectAnswer.classList.add('hidden');
+            } else {
+                gameState.combo = 0;
+                SFX.wrong();
+
+                document.getElementById('petStatusText').textContent = '「沒關係！看看文法小錦囊，下一題一定行！💪」';
+
+                feedbackBox.className = 'rounded-2xl p-5 mb-6 bg-rose-950/80 border-2 border-rose-400 animate-pop-in';
+                feedbackIcon.textContent = '💡';
+                feedbackTitle.className = 'font-black text-lg text-rose-300 mb-1';
+                feedbackTitle.textContent = '差一點點！別氣餒，一起來看看解析：';
+                feedbackCorrectAnswer.classList.remove('hidden');
+                feedbackCorrectAnswer.className = 'text-sm font-bold text-amber-300 mb-2';
+                feedbackCorrectAnswer.textContent = `✅ 正確答案是：${q.answer}`;
+            }
+
+            feedbackExplanation.textContent = q.explanation;
+            feedbackBox.classList.remove('hidden');
+
+            // 顯示下一題按鈕
+            const nextBtnRow = document.getElementById('nextBtnRow');
+            const nextBtnText = document.getElementById('nextBtnText');
+            nextBtnRow.classList.remove('hidden');
+
+            if (gameState.currentIndex === 11 || gameState.currentIndex === 23) {
+                nextBtnText.textContent = '查看階段進化結果！';
+            } else if (gameState.currentIndex === QUESTIONS.length - 1) {
+                nextBtnText.textContent = '🥚 迎接最終神獸孵化！';
+            } else {
+                nextBtnText.textContent = '繼續下一題';
+            }
+
+            updateIncubatorUI();
+        }
+
+        /* =====================================================================
+           9. 關卡切換、階段休息站與最終神獸結算
+           ===================================================================== */
+        function nextQuestion() {
+            SFX.click();
+
+            // 第 12 題結束 -> 第一階段休息站
+            if (gameState.currentIndex === 11) {
+                showStageBreak(1);
+                return;
+            }
+            // 第 24 題結束 -> 第二階段休息站
+            if (gameState.currentIndex === 23) {
+                showStageBreak(2);
+                return;
+            }
+            // 第 36 題結束 -> 最終結算證書
+            if (gameState.currentIndex === QUESTIONS.length - 1) {
+                showFinalResult();
+                return;
+            }
+
+            gameState.currentIndex += 1;
+            updateIncubatorUI();
+            renderQuestion();
+        }
+
+        function showStageBreak(completedStage) {
+            SFX.evolve();
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('stageBreakScreen').classList.remove('hidden');
+
+            const answeredCount = completedStage * 12;
+            const stageAcc = Math.round((gameState.correctCount / answeredCount) * 100);
+
+            document.getElementById('stageBreakScore').textContent = gameState.score;
+            document.getElementById('stageBreakAcc').textContent = `${stageAcc}%`;
+
+            if (completedStage === 1) {
+                document.getElementById('stageBreakTitle').textContent = '🎊 第一階段完成！蛋殼裂開了！';
+                document.getElementById('stageBreakSubtitle').textContent = '你成功完成了基礎單字與時態特訓，神獸已經甦醒並探出頭來囉！';
+                document.getElementById('stageBreakPetSvg').innerHTML = PET_SVGS.crackedEgg;
+                document.getElementById('stageBreakPetName').textContent = '進化形態：裂殼星光蛋';
+                document.getElementById('stageBreakPetDesc').textContent = '接下來第二階段將挑戰「比較級、動名詞/不定詞與連接詞」，準備好讓它破殼而出了嗎？';
+            } else {
+                document.getElementById('stageBreakTitle').textContent = '⚡ 第二階段突破！幼獸破殼而出！';
+                document.getElementById('stageBreakSubtitle').textContent = '太厲害了！你克服了比較級與動名詞關卡，小神獸已經誕生！';
+                document.getElementById('stageBreakPetSvg').innerHTML = PET_SVGS.babyHatchling;
+                document.getElementById('stageBreakPetName').textContent = '進化形態：翡翠萌芽幼獸';
+                document.getElementById('stageBreakPetDesc').textContent = '最後 12 題「神獸覺醒期」將決定它進化成傳說聖龍、烈焰鳳凰還是其他夥伴，全力衝刺吧！';
+            }
+        }
+
+        function continueNextStage() {
+            SFX.click();
+            document.getElementById('stageBreakScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+
+            gameState.currentIndex += 1;
+            updateIncubatorUI();
+            renderQuestion();
+        }
+
+        function showFinalResult() {
+            SFX.evolve();
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            const accuracy = Math.round((gameState.correctCount / QUESTIONS.length) * 100);
+
+            // 根據總答對率決定最終孵化的神獸
+            let hatchedPet = FINAL_PETS[FINAL_PETS.length - 1];
+            for (const pet of FINAL_PETS) {
+                if (accuracy >= pet.minAccuracy) {
+                    hatchedPet = pet;
+                    break;
+                }
+            }
+
+            // 儲存解鎖紀錄至 localStorage
+            if (!gameState.unlockedPetIds.includes(hatchedPet.id)) {
+                gameState.unlockedPetIds.push(hatchedPet.id);
+                localStorage.setItem('fantasy_egg_unlocked', JSON.stringify(gameState.unlockedPetIds));
+            }
+
+            // 填入證書資訊
+            document.getElementById('certStudentName').textContent = gameState.studentName;
+            document.getElementById('finalRarityBadge').textContent = hatchedPet.rarity;
+            document.getElementById('finalRarityBadge').className = `inline-block px-3 py-1 rounded-full border text-xs font-black mb-2 ${hatchedPet.rarityColor}`;
+            document.getElementById('finalPetSvgContainer').innerHTML = hatchedPet.svg;
+            document.getElementById('finalPetName').textContent = hatchedPet.name;
+            document.getElementById('finalPetQuote').textContent = hatchedPet.quote;
+
+            document.getElementById('finalTotalScore').textContent = gameState.score;
+            document.getElementById('finalCorrectCount').textContent = `${gameState.correctCount} / ${QUESTIONS.length}`;
+            document.getElementById('finalMaxCombo').textContent = `${gameState.maxCombo} 連擊`;
+
+            // 生成文法單元掌握度長條圖
+            const breakdownList = document.getElementById('grammarBreakdownList');
+            breakdownList.innerHTML = '';
+
+            let strongestCat = '';
+            let highestRate = -1;
+            let weakestCat = '';
+            let lowestRate = 101;
+
+            Object.entries(gameState.categoryStats).forEach(([cat, stat]) => {
+                const rate = Math.round((stat.correct / stat.total) * 100);
+                if (rate > highestRate) {
+                    highestRate = rate;
+                    strongestCat = cat;
+                }
+                if (rate < lowestRate) {
+                    lowestRate = rate;
+                    weakestCat = cat;
+                }
+
+                let barColor = 'bg-emerald-400';
+                if (rate < 50) barColor = 'bg-rose-400';
+                else if (rate < 80) barColor = 'bg-amber-400';
+
+                const row = document.createElement('div');
+                row.innerHTML = `
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                        <span class="text-slate-200">${cat}</span>
+                        <span class="text-amber-300">${stat.correct}/${stat.total} 題 (${rate}%)</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full rounded-full ${barColor}" style="width: ${rate}%"></div>
+                    </div>
+                `;
+                breakdownList.appendChild(row);
+            });
+
+            // 個人化學習扶助建議
+            const adviceBox = document.getElementById('teacherAdviceBox');
+            if (accuracy === 100) {
+                adviceBox.innerHTML = `🌟 <strong>滿分大師評語：</strong>太神啦！你對八年級所有核心文法都瞭若指掌，已經具備挑戰九年級進階文法的超強實力！`;
+            } else {
+                adviceBox.innerHTML = `📌 <strong>學習診斷小叮嚀：</strong>你在「<span class="text-amber-300 font-bold">${strongestCat}</span>」表現最亮眼（答對率 ${highestRate}%）！建議接下來可以多複習「<span class="text-rose-300 font-bold">${weakestCat}</span>」，再挑戰一次把傳說級黃金聖龍帶回家！`;
+            }
+        }
+
+        /* =====================================================================
+           10. 神獸圖鑑預覽 (剪影模式)
+           ===================================================================== */
+        function openPokedexModal() {
+            SFX.click();
+            const grid = document.getElementById('pokedexGrid');
+            grid.innerHTML = '';
+
+            FINAL_PETS.forEach(pet => {
+                const isUnlocked = gameState.unlockedPetIds.includes(pet.id);
+                const card = document.createElement('div');
+                card.className = `rounded-2xl p-4 border text-center transition ${
+                    isUnlocked
+                        ? 'bg-slate-800/90 border-amber-400/50 shadow-lg'
+                        : 'bg-slate-900/80 border-slate-700/80'
+                }`;
+
+                card.innerHTML = `
+                    <div class="text-xs font-black mb-2 ${isUnlocked ? 'text-amber-300' : 'text-slate-500'}">
+                        ${pet.rarity} ${isUnlocked ? '✅ 已解鎖' : '🔒 未解鎖剪影'}
+                    </div>
+                    <div class="w-32 h-32 mx-auto my-2 rounded-full bg-slate-950/60 flex items-center justify-center p-2 ${isUnlocked ? '' : 'silhouette'}">
+                        ${pet.svg}
+                    </div>
+                    <h4 class="font-black text-base ${isUnlocked ? 'text-white' : 'text-slate-400'}">
+                        ${isUnlocked ? pet.name : '？？？神秘神獸'}
+                    </h4>
+                    <p class="text-xs text-indigo-300 mt-1 font-bold">
+                        解鎖條件：${pet.conditionText}
+                    </p>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('pokedexModal').classList.remove('hidden');
+        }
+
+        function closePokedexModal() {
+            SFX.click();
+            document.getElementById('pokedexModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
